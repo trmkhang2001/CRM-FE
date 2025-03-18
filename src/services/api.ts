@@ -1,7 +1,19 @@
 // src/services/api.ts
+'use server'
 import axios from 'axios';
+import { cookies } from 'next/headers'
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+export namespace CurrentUserResponse {
+    export type User = {
+      id: number;
+      email: string;
+      name: string;
+    }
+  
+    export type Token = string;
+  }
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
 const api = axios.create({
     baseURL: API_URL,
@@ -12,8 +24,9 @@ const api = axios.create({
 
 // Thêm interceptor để gắn token vào mỗi request
 api.interceptors.request.use(
-    (config) => {
-        const token = localStorage.getItem('token');
+    async (config) => {
+        const cookieStore = await cookies();
+        const token = cookieStore.get('token');
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
@@ -22,35 +35,38 @@ api.interceptors.request.use(
     (error) => Promise.reject(error)
 );
 
-export const authService = {
-    register: async (userData: { name: string; email: string; password: string; role: string }) => {
-        const response = await api.post('/api/auth/register', userData);
-        return response.data;
-    },
+export async function register(userData: { name: string; email: string; password: string; role: string }) {
+    const response = await api.post('/api/auth/register', userData);
+    return response.data;
+}
 
-    login: async (credentials: { email: string; password: string }) => {
-        const response = await api.post('/api/auth/login', credentials);
+export async function login(credentials: { email: string; password: string }) {
+    const response = await api.post('/api/auth/login', credentials);
+    if (response.data.token) {
+        const cookieStore = await cookies();
+        cookieStore.set('token', response.data.token);
+        console.log("token :", response.data.token)
+        cookieStore.set('user', JSON.stringify(response.data.user))
+    }
+    return response.data;
+}
 
-        if (response.data.token) {
-            localStorage.setItem('token', response.data.token);
-            localStorage.setItem('user', JSON.stringify(response.data.user));
-        }
+export async function logout() {
+    const cookieStore = await cookies();
+    cookieStore.delete('token');
+    cookieStore.delete('user');
+}
 
-        return response.data;
-    },
+export async function getCurrentUser() {
+    const cookieStore = await cookies();
+    const userStr = cookieStore.get('user');
+    const token = cookieStore.get('token')?.value;
 
-    logout: () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-    },
-
-    getCurrentUser: () => {
-        const userStr = localStorage.getItem('user');
-        if (userStr) {
-            return JSON.parse(userStr);
-        }
-        return null;
-    },
-};
+    if (userStr?.value && token) {
+        const user = JSON.parse(userStr.value);
+        return { user, token };
+    }
+    return null;
+}
 
 export default api;

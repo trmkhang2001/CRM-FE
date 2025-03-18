@@ -9,11 +9,11 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { toast } from 'sonner';
 import GuestRoute from '@/components/auth/GuestRoute';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 
 const loginSchema = z.object({
     email: z.string().email('Email không hợp lệ'),
@@ -23,7 +23,7 @@ const loginSchema = z.object({
 type LoginFormValues = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
-    const { login } = useAuth();
+    const { login1 } = useAuth();
     const [isLoading, setIsLoading] = useState(false);
     const searchParams = useSearchParams();
     const redirect = searchParams.get('redirect') || '/dashboard';
@@ -43,7 +43,7 @@ export default function LoginPage() {
     const onSubmit = async (data: LoginFormValues) => {
         try {
             setIsLoading(true);
-            await login(data.email, data.password);
+            await login1(data.email, data.password);
             toast.success('Đăng nhập thành công', {
                 description: 'Chào mừng bạn quay trở lại',
             });
@@ -79,7 +79,6 @@ export default function LoginPage() {
                                 {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
                             </div>
                         </CardContent>
-
                         <CardFooter className="flex flex-col space-y-4 mt-4">
                             <Button type="submit" className="w-full" disabled={isLoading}>
                                 {isLoading ? 'Đang xử lý...' : 'Đăng nhập'}

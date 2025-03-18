@@ -1,10 +1,9 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import './globals.css';
+import { Inter } from 'next/font/google';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { Toaster } from 'sonner';
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
-import { AppSidebar } from "@/components/app-sidebar"
+import { cn } from '@/lib/utils';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -12,16 +11,16 @@ export const metadata: Metadata = {
   description: 'Ứng dụng quản lý nhân viên hiệu quả',
 };
 
-export default function RootLayout({
+export default function AuthLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <html lang="vi">
-      <body className={inter.className}>
+      <body className={cn(inter.className, "flex min-h-screen  bg-gray-100")}>
         <AuthProvider>
-          <main>
+          <main className="flex-1 p-4">
             {children}
           </main>
           <Toaster richColors />
@@ -30,3 +29,4 @@ export default function RootLayout({
     </html>
   );
 }
+

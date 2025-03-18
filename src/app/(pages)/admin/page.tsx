@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function AdminPage() {
-    const { user, logout } = useAuth();
+    const { user, logout1 } = useAuth();
 
     return (
         <ProtectedRoute adminOnly>
@@ -17,7 +17,7 @@ export default function AdminPage() {
                         <h1 className="text-2xl font-bold">Admin Dashboard</h1>
                         <div className="flex items-center gap-4">
                             <span>Xin chào, {user?.name}</span>
-                            <Button variant="outline" onClick={logout}>
+                            <Button variant="outline" onClick={logout1}>
                                 Đăng xuất
                             </Button>
                         </div>

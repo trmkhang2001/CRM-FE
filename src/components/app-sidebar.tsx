@@ -1,5 +1,5 @@
 'use clients';
-import { Calendar, ChevronUp, Home, Inbox, Search, Settings, User2 } from "lucide-react"
+import {Building, ChartArea,ReceiptText, Settings, Store, User } from "lucide-react"
 
 import {
     Sidebar,
@@ -17,28 +17,33 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 // Menu items.
 const items = [
     {
-        title: "Home",
-        url: "#",
-        icon: Home,
+        title: "Dashboard",
+        url: "/dashboard",
+        icon: ChartArea,
     },
     {
-        title: "Inbox",
-        url: "dashboard/inbox",
-        icon: Inbox,
+        title: "Quản lý nhân viên",
+        url: "/employees",
+        icon: User,
     },
     {
-        title: "Calendar",
-        url: "#",
-        icon: Calendar,
+        title: "Quản lý phòng ban",
+        url: "/department",
+        icon: Building,
     },
     {
-        title: "Search",
-        url: "#",
-        icon: Search,
+        title: "Product",
+        url: "/product",
+        icon: Store,
+    },
+    {
+        title: "Contract/Service",
+        url: "/contract",
+        icon: ReceiptText,
     },
     {
         title: "Settings",
-        url: "#",
+        url: "/setting",
         icon: Settings,
     },
 ]
