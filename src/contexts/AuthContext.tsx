@@ -3,9 +3,9 @@
 
 import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
-import { authService } from '@/services/api';
+import {getCurrentUser, login, logout, register } from '../services/api';
 
-interface User {
+export interface User {
     id: number;
     name: string;
     email: string;
@@ -15,9 +15,9 @@ interface User {
 interface AuthContextType {
     user: User | null;
     loading: boolean;
-    login: (email: string, password: string) => Promise<void>;
-    register: (name: string, email: string, password: string, role: string) => Promise<void>;
-    logout: () => void;
+    login1: (email: string, password: string) => Promise<void>;
+    register1: (name: string, email: string, password: string, role?: string) => Promise<void>;
+    logout1: () => void;
     isAuthenticated: boolean;
     isAdmin: boolean;
 }
@@ -26,9 +26,9 @@ interface AuthContextType {
 const defaultValue: AuthContextType = {
     user: null,
     loading: true,
-    login: async () => { },
-    register: async () => { },
-    logout: () => { },
+    login1: async () => { },
+    register1: async () => { },
+    logout1: () => { },
     isAuthenticated: false,
     isAdmin: false
 };
@@ -41,22 +41,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const router = useRouter();
 
     useEffect(() => {
-
-        const loadUserFromLocalStorage = () => {
-            const user = authService.getCurrentUser();
-            if (user) {
-                setUser(user);
+        const loadUserFromCookie = async () => {
+            const currentUser = await getCurrentUser();
+            console.log("current:",currentUser);
+            if (currentUser) {
+                setUser(currentUser.user);
             }
             setLoading(false);
         };
 
-        loadUserFromLocalStorage();
+        loadUserFromCookie();
     }, []);
 
-    const login = async (email: string, password: string) => {
+    const login1 = async (email: string, password: string) => {
         try {
             setLoading(true);
-            const data = await authService.login({ email, password });
+            const data = await login({ email, password });
             setUser(data.user);
             router.push('/dashboard');
         } catch (error) {
@@ -67,10 +67,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
     };
 
-    const register = async (name: string, email: string, password: string, role: string) => {
+    const register1 = async (name: string, email: string, password: string, role: string = 'staff') => {
         try {
             setLoading(true);
-            await authService.register({ name, email, password, role });
+            await register({ name, email, password, role });
             router.push('/login');
         } catch (error) {
             console.error('Registration failed:', error);
@@ -80,9 +80,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
     };
 
-    const logout = () => {
-        authService.logout();
-        localStorage.removeItem("user");
+    const logout1 = () => {
+        logout();
         setUser(null);
         router.push('/login');
     };
@@ -90,9 +89,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const value = {
         user,
         loading,
-        login,
-        register,
-        logout,
+        login1,
+        register1,
+        logout1,
         isAuthenticated: !!user,
         isAdmin: user?.role === 'admin',
     };
