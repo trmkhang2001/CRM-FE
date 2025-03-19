@@ -1,6 +1,8 @@
 'use server'
+import { ENDPOINTS } from "@/constants/endpoints";
 import { Staff } from "@/models/models";
 import { getCurrentUser } from "@/services/api";
+import { fetchData } from "@/utils/utilsApi";
 import { cookies } from "next/headers";
 
 export type updateEmployeeDto = {
@@ -22,7 +24,11 @@ export type createEmployeeDto = {
     startDate: string;
 }
 
-
+export async function getEmployeeById(id: number): Promise<Staff> {
+    console.log(ENDPOINTS.EMPLOYEES);
+    const data = await fetchData<Staff>(`${ENDPOINTS.EMPLOYEES}/${id}`, "GET");
+    return data;
+}
 
 
 export async function getAllEmployee(): Promise<Staff[]> {

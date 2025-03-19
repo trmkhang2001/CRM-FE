@@ -16,8 +16,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import { getCurrentUser } from "@/services/api"
 import { toast } from "sonner"
 import { DepartmentModel, Staff } from "@/models/models"
-import { updateEmployeeDto, updateEmployee, createEmployee } from "./employee-api"
-import { addNewEmployeeIntoStore, updateEmployeeStore } from "../store/employees-store"
+import { updateEmployeeDto, updateEmployee, createEmployee } from "../../services/employee-api"
+import { addNewEmployeeIntoStore, updateEmployeeStore, useEmployeesStore } from "../store/employees-store"
 import { useDepartmentStore } from "../store/department-store"
 import { useEffect, useState } from "react"
 import { getAllDepartment } from "../department/department-api"
@@ -51,6 +51,7 @@ const formSchema = z.object({
 
 export function CreateNewEmployeesForm({ onSave, initialData }: CreateNewEmployeesFormProps) {
     const [department, setDepartment] = useState<DepartmentModel[]>([])
+    const {employeeList } = useEmployeesStore();
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -88,6 +89,7 @@ export function CreateNewEmployeesForm({ onSave, initialData }: CreateNewEmploye
                 toast.success('Cập nhập nhân viên thành công');
                 onSave();
                 console.log("data", data)
+                console.log("employeeList", employeeList)
             }
             else {
                 const data = await createEmployee(values);
