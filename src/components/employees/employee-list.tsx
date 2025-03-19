@@ -6,7 +6,7 @@ import { Button } from "../ui/button";
 import { Plus } from "lucide-react";
 import CreateDialog from "../dialogs/CreateDialog";
 import { employeesStore, setAllEmployeeIntoStore } from "../store/employees-store";
-import { getAllEmployee } from "./employee-api";
+import { getAllEmployee } from "../../services/employee-api";
 import { employeeColumns } from "../datatables/columns/employee-column";
 import { CreateNewEmployeesForm } from "./create-new-employees-form";
 import { departmentListStore } from "../store/department-store";

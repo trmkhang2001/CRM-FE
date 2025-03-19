@@ -3,7 +3,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 
 interface DeleteButtonProps {
   onDelete: (id: number) => void;
-  itemName: string;
+  itemName?: string;
   id: number,
 }
 

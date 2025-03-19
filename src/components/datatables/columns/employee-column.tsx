@@ -6,7 +6,7 @@ import { Staff } from "@/models/models";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { DeleteButton } from "@/components/common/DeleteButton";
-import { deleteEmployee } from "@/components/employees/employee-api";
+import { deleteEmployee } from "@/services/employee-api";
 import { deleteEmployeeStore } from "@/components/store/employees-store";
 import { EditButton } from "@/components/common/EditButton";
 import { CreateNewEmployeesForm } from "@/components/employees/create-new-employees-form";
@@ -33,7 +33,6 @@ export const employeeColumns: ColumnDef<Staff>[] = [
         accessorKey: "Department",
         header: "Phòng ban",
         cell: ({ row }) => {
-            console.log("Row data:", row.original); // Kiểm tra dữ liệu
             const department = row.original.Department;
             return <span>{department?.name || "Không có phòng ban"}</span>; // Sử dụng optional chaining và giá trị mặc định
         },
@@ -62,6 +61,7 @@ export const employeeColumns: ColumnDef<Staff>[] = [
         enableHiding: false,
         cell: ({ row }) => {
             const [open, setOpen] = useState(false)
+            console.log("Row data:", row.original); // Kiểm tra dữ liệu
             const employeeData = row.original
             const handleDelete = (id: number) => {
                 deleteEmployee(id);

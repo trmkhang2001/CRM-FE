@@ -1,5 +1,5 @@
 'use clients';
-import {Building, ChartArea,ReceiptText, Settings, Store, User } from "lucide-react"
+import {Building, ChartArea,CircleDollarSign,ReceiptText, Settings, User } from "lucide-react"
 
 import {
     Sidebar,
@@ -12,7 +12,6 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu"
 
 // Menu items.
 const items = [
@@ -32,14 +31,14 @@ const items = [
         icon: Building,
     },
     {
-        title: "Product",
-        url: "/product",
-        icon: Store,
+        title: "Quản lý lương thưởng",
+        url: "/salary",
+        icon: CircleDollarSign,
     },
     {
-        title: "Contract/Service",
-        url: "/contract",
-        icon: ReceiptText,
+        title: "Quản lý người dùng",
+        url: "/user",
+        icon: User,
     },
     {
         title: "Settings",
@@ -70,34 +69,6 @@ export function AppSidebar() {
                     </SidebarGroupContent>
                 </SidebarGroup>
             </SidebarContent>
-            {/* <SidebarFooter>
-                <SidebarMenu>
-                    <SidebarMenuItem>
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <SidebarMenuButton>
-                                    <User2 /> Username
-                                    <ChevronUp className="ml-auto" />
-                                </SidebarMenuButton>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent
-                                side="top"
-                                className="w-[--radix-popper-anchor-width]"
-                            >
-                                <DropdownMenuItem>
-                                    <span>Account</span>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    <span>Billing</span>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    <span>Sign out</span>
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    </SidebarMenuItem>
-                </SidebarMenu>
-            </SidebarFooter> */}
         </Sidebar>
     )
 }
