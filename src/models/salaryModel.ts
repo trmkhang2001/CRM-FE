@@ -1,4 +1,4 @@
-export interface Salary {
+export interface SalaryModel {
   id: number;
   employeeId: number;
   basicSalary: number;
@@ -14,9 +14,9 @@ export interface Salary {
   employeeName?: string;
 }
 
-  export type CreateSalaryDto = Omit<Salary, 'id' | 'totalSalary'>;
+  export type CreateSalaryDto = Omit<SalaryModel, 'id' | 'totalSalary'>;
 
-  export type UpdateSalaryDto = Omit<Salary, 'month' | 'year' | 'totalSalary' | 'employeeId'>;
+  export type UpdateSalaryDto = Omit<SalaryModel, 'month' | 'year' | 'totalSalary' | 'employeeId'>;
 
   export  enum Method {
     GET = "GET",

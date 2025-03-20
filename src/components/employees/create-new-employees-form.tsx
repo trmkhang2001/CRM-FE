@@ -15,15 +15,15 @@ import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
 import { getCurrentUser } from "@/services/api"
 import { toast } from "sonner"
-import { DepartmentModel, Staff } from "@/models/models"
-import { updateEmployeeDto, updateEmployee, createEmployee } from "../../services/employee-api"
-import { addNewEmployeeIntoStore, updateEmployeeStore, useEmployeesStore } from "../store/employees-store"
-import { useDepartmentStore } from "../store/department-store"
+import { DepartmentModel, StaffModel } from "@/models/employeeModel"
+import { updateEmployeeDto, updateEmployee, createEmployee } from "../../services/employeeService"
+import { addNewEmployeeIntoStore, updateEmployeeStore, useEmployeesStore } from "../stores/employees-store"
+import { useDepartmentStore } from "../stores/department-store"
 import { useEffect, useState } from "react"
-import { getAllDepartment } from "../department/department-api"
+import { getAllDepartment } from "../../services/departmentService"
 type CreateNewEmployeesFormProps = {
     onSave: () => void;
-    initialData?: Staff;
+    initialData?: StaffModel;
 };
 
 

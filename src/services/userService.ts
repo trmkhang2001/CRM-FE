@@ -1,8 +1,8 @@
 "use server"
 
 import { ENDPOINTS } from "@/constants/endpoints";
-import { Method } from "@/models/salary";
-import { CreateUserDto, UserModel } from "@/models/user";
+import { Method } from "@/models/salaryModel";
+import { CreateUserDto, UserModel } from "@/models/userModel";
 import { fetchData } from "@/utils/utilsApi";
 
 export async function getAllUser(): Promise<UserModel[]> {

@@ -1,17 +1,15 @@
 "use client"
 import { ColumnDef } from "@tanstack/react-table"
-import { Button } from "@/components/ui/button";
-import CreateDialog from "@/components/dialogs/CreateDialog";
 import { useState } from "react";
 import { DeleteButton } from "@/components/common/DeleteButton";
-import { Salary } from "@/models/salary";
+import { SalaryModel } from "@/models/salaryModel";
 import { SalaryForm } from "@/components/salarys/SalaryForm";
 import { deleteSalary } from "@/services/salaryService";
-import { deleteSalaryStore } from "@/components/store/salary-store";
+import { deleteSalaryStore } from "@/components/stores/salary-store";
 import { EditButton } from "@/components/common/EditButton";
 
 
-export const salaryColumn: ColumnDef<Salary>[] = [
+export const salaryColumn: ColumnDef<SalaryModel>[] = [
   {
     accessorKey: "employeeName",
     header: "Họ và tên",

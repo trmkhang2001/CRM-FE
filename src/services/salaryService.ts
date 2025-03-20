@@ -1,12 +1,12 @@
 "use server"
 
 import { ENDPOINTS } from "@/constants/endpoints";
-import { CreateSalaryDto, Method, Salary, UpdateSalaryDto } from "@/models/salary";
+import { CreateSalaryDto, Method, SalaryModel, UpdateSalaryDto } from "@/models/salaryModel";
 import { fetchData } from "@/utils/utilsApi";
 
-export async function getSalaryFromMonthYear(month: number, year: number): Promise<Salary[]> {
+export async function getSalaryFromMonthYear(month: number, year: number): Promise<SalaryModel[]> {
     const queryParams = new URLSearchParams({ month: month.toString(), year: year.toString() }).toString();
-    const data = await fetchData<Salary[]>(`${ENDPOINTS.SALARIES}?${queryParams}`, Method.GET);
+    const data = await fetchData<SalaryModel[]>(`${ENDPOINTS.SALARIES}?${queryParams}`, Method.GET);
     return data;
 }
 
@@ -15,13 +15,13 @@ export async function deleteSalary(id: number): Promise<string> {
     return data
 }
 
-export async function updateSalary(props: UpdateSalaryDto): Promise<Salary> {
-    const data = await fetchData<{message: string, salaryRecord: Salary}>(`${ENDPOINTS.SALARIES}/${props.id}`, Method.PUT, props);
+export async function updateSalary(props: UpdateSalaryDto): Promise<SalaryModel> {
+    const data = await fetchData<{message: string, salaryRecord: SalaryModel}>(`${ENDPOINTS.SALARIES}/${props.id}`, Method.PUT, props);
     return data.salaryRecord;
 }
 
-export async function createSalary(props: CreateSalaryDto): Promise<Salary> {
-    const data = await fetchData<{message: string, salaryRecord: Salary}>(ENDPOINTS.SALARIES, Method.POST, props);
+export async function createSalary(props: CreateSalaryDto): Promise<SalaryModel> {
+    const data = await fetchData<{message: string, salaryRecord: SalaryModel}>(ENDPOINTS.SALARIES, Method.POST, props);
     console.log("SAlaryrecord",data.salaryRecord)
     return data.salaryRecord;
 }
