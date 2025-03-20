@@ -7,10 +7,10 @@ import { Button } from "../ui/button";
 import { Plus } from "lucide-react";
 import MonthYearPicker from "./DataPicker";
 import { getSalaryFromMonthYear } from "@/services/salaryService";
-import { getAllEmployee } from "@/services/employee-api";
+import { getAllEmployee } from "@/services/employeeService";
 import { toast } from "sonner";
 import { SalaryForm } from "./SalaryForm";
-import { salaryStore, setAllSalaryIntoStore, useSalaryStore } from "../store/salary-store";
+import { salaryStore, setAllSalaryIntoStore, useSalaryStore } from "../stores/salary-store";
 import { useSnapshot } from "valtio";
 
 export default function SalaryDetailPage() {

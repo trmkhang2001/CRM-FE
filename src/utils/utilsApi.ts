@@ -26,10 +26,8 @@ export async function fetchData<T>(
     const response = await fetch(url, config);
     if (!response.ok) {
         const errorData = await response.json();
-        console.log("responseData", errorData)
         throw new Error(errorData.message || "Failed to fetch data");
     }
     const responseData = await response.json()
-    console.log("responseData",responseData)
     return responseData;
 }

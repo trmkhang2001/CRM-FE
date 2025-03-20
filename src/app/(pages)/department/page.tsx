@@ -1,4 +1,4 @@
-import DepartmentDetailPage from "@/components/department/DepartmentList";
+import DepartmentDetailPage from "@/components/departments/DepartmentList";
 
 export default function DepartmentPage() {
   return (

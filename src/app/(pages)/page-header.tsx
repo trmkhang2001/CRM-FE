@@ -1,6 +1,6 @@
 'use client'
 
-import { NavUser } from "@/components/userProfile/nav-user";
+import { NavUser } from "@/components/userProfile/navUser";
 import { useAuth } from "@/contexts/AuthContext";
 import React from "react";
 

@@ -1,3 +1,4 @@
+import { StaffModel } from "@/models/employeeModel";
 import { proxy, useSnapshot } from "valtio";
 
 export const employeesStore = proxy({

@@ -1,10 +1,9 @@
 'use clients';
-import {Building, ChartArea,CircleDollarSign,ReceiptText, Settings, User } from "lucide-react"
+import {Building, ChartArea,CircleDollarSign, Settings, User } from "lucide-react"
 
 import {
     Sidebar,
     SidebarContent,
-    SidebarFooter,
     SidebarGroup,
     SidebarGroupContent,
     SidebarGroupLabel,
@@ -16,7 +15,7 @@ import {
 // Menu items.
 const items = [
     {
-        title: "Dashboard",
+        title: "Thống kê",
         url: "/dashboard",
         icon: ChartArea,
     },

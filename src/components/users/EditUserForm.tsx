@@ -14,9 +14,9 @@ import {
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
 import { toast } from "sonner"
-import { CreateUserDto, UserModel } from "@/models/user"
-import { createUser, updateUser } from "@/services/userService"
-import { createUserIntoStore, updateUserStore } from "../store/user-store"
+import { UserModel } from "@/models/userModel"
+import { updateUser } from "@/services/userService"
+import { updateUserStore } from "../stores/user-store"
 type UserFormProps = {
     onSave: () => void;
     initialData?: UserModel;

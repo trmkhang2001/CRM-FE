@@ -14,13 +14,13 @@ import {
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
 import { toast } from "sonner"
-import { CreateSalaryDto, Salary, UpdateSalaryDto } from "@/models/salary"
+import { CreateSalaryDto, SalaryModel, UpdateSalaryDto } from "@/models/salaryModel"
 import { createSalary, updateSalary } from "@/services/salaryService"
-import { addNewSalaryIntoStore, updateSalaryStore, useSalaryStore } from "../store/salary-store"
-import { getEmployeeById } from "@/services/employee-api"
+import { addNewSalaryIntoStore, updateSalaryStore, useSalaryStore } from "../stores/salary-store"
+import { getEmployeeById } from "@/services/employeeService"
 type SalaryFormProps = {
     onSave: () => void;
-    initialData?: Salary;
+    initialData?: SalaryModel;
 };
 
 const salaryFormSchema = z.object({
@@ -95,7 +95,7 @@ export function SalaryForm({ onSave, initialData }: SalaryFormProps) {
                 };
                 const data = await updateSalary(salaryDataEdit)
                 const getEmployeeName =  await getEmployeeById(data.employeeId)
-                const value: Salary = {
+                const value: SalaryModel = {
                     ...data,
                     employeeName: getEmployeeName.fullName
                 }
@@ -116,7 +116,7 @@ export function SalaryForm({ onSave, initialData }: SalaryFormProps) {
                 };
                 const data = await createSalary(salaryDataCreate);
                 const getEmployeeName =  await getEmployeeById(data.employeeId)
-                const value: Salary = {
+                const value: SalaryModel = {
                     ...data,
                     employeeName: getEmployeeName.fullName
                 }

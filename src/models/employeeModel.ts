@@ -1,4 +1,4 @@
-export interface Staff {
+export interface StaffModel {
   id: number;
   fullName: string;
   email: string;
@@ -16,18 +16,3 @@ export interface DepartmentModel {
   description: string,
 }
 
-export interface Salary {
-  id: number;
-  employeeId: number;
-  basicSalary: number;
-  overtimeSalary: number;
-  bonus: number;
-  penalty: number;
-  allowance: number;
-  totalSalary: number;
-  month: string;
-  year: string;
-
-  // FE fields
-  employeeName?: string;
-}

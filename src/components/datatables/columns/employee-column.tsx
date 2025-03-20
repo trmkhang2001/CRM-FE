@@ -1,18 +1,23 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
-
-import { Staff } from "@/models/models";
+import { StaffModel } from "@/models/employeeModel";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { DeleteButton } from "@/components/common/DeleteButton";
-import { deleteEmployee } from "@/services/employee-api";
-import { deleteEmployeeStore } from "@/components/store/employees-store";
+import { deleteEmployee } from "@/services/employeeService";
+import { deleteEmployeeStore } from "@/components/stores/employees-store";
 import { EditButton } from "@/components/common/EditButton";
 import { CreateNewEmployeesForm } from "@/components/employees/create-new-employees-form";
 import { useState } from "react";
 
-export const employeeColumns: ColumnDef<Staff>[] = [
+
+const handleDelete = (id: number) => {
+    deleteEmployee(id);
+    deleteEmployeeStore(id);
+}
+
+
+export const employeeColumns: ColumnDef<StaffModel>[] = [
     {
         accessorKey: "fullName",
         header: "Họ tên",
@@ -61,15 +66,10 @@ export const employeeColumns: ColumnDef<Staff>[] = [
         enableHiding: false,
         cell: ({ row }) => {
             const [open, setOpen] = useState(false)
-            console.log("Row data:", row.original); // Kiểm tra dữ liệu
             const employeeData = row.original
-            const handleDelete = (id: number) => {
-                deleteEmployee(id);
-                deleteEmployeeStore(id);
-            }
             return (
                 <div className="flex gap-1">
-                    <EditButton title="Chỉnh sửa nhân viên"  open={open} setOpen={setOpen} >
+                    <EditButton title="Chỉnh sửa nhân viên" open={open} setOpen={setOpen} >
                         <CreateNewEmployeesForm
                             initialData={employeeData}
                             onSave={() => setOpen(false)}

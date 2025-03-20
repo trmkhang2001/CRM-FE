@@ -13,11 +13,11 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { toast } from "sonner"
-import { CreateDepartmentDto, createNewDepartment } from "./department-api"
-import { addNewDepartmentIntoStore, departmentListStore } from "../store/department-store"
-import { DepartmentModel } from "@/models/models"
+import { CreateDepartmentDto, createDepartment } from "../../services/departmentService"
+import { addNewDepartmentIntoStore, departmentListStore } from "../stores/department-store"
+import { DepartmentModel } from "@/models/employeeModel"
 
-type CreateNewDepartmentForm = {
+type DepartmentForm = {
     onSave: () => void;
     initialData?: DepartmentModel;
 };
@@ -30,7 +30,7 @@ const formSchema = z.object({
 });
 
 
-export function   CreateNewDepartmentForm({ onSave, initialData }: CreateNewDepartmentForm) {
+export function   CreateNewDepartmentForm({ onSave, initialData }: DepartmentForm) {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -45,7 +45,7 @@ export function   CreateNewDepartmentForm({ onSave, initialData }: CreateNewDepa
                 name: values.fullName,
                 description: values.description,
             };
-            const data = await createNewDepartment(departmentData);
+            const data = await createDepartment(departmentData);
             toast.success('Thêm phòng ban mới thành công');
             addNewDepartmentIntoStore(data);
             onSave();
