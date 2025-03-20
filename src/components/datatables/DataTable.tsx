@@ -18,7 +18,7 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { Button } from "../ui/button"
-import React from "react"
+import React, { useEffect } from "react"
 import { ColumnFilter } from "./column-filter"
 
 
@@ -34,12 +34,13 @@ export default function DataTables<TData, TValue>({
     columns,
     data,
     children,
-    columnKey, 
+    columnKey,
     placeholder
 }: DataTableProps<TData, TValue>) {
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
         []
     )
+    console.log("DataTables received data:", data);
     const table = useReactTable<TData>({
         data,
         columns,

@@ -16,12 +16,13 @@ export async function deleteSalary(id: number): Promise<string> {
 }
 
 export async function updateSalary(props: UpdateSalaryDto): Promise<Salary> {
-    const data = await fetchData<Salary>(`${ENDPOINTS.SALARIES}/${props.id}`, Method.PUT, props);
-    return data;
+    const data = await fetchData<{message: string, salaryRecord: Salary}>(`${ENDPOINTS.SALARIES}/${props.id}`, Method.PUT, props);
+    return data.salaryRecord;
 }
 
 export async function createSalary(props: CreateSalaryDto): Promise<Salary> {
-    const data = await fetchData<Salary>(ENDPOINTS.SALARIES, Method.POST, props);
-    return data;
+    const data = await fetchData<{message: string, salaryRecord: Salary}>(ENDPOINTS.SALARIES, Method.POST, props);
+    console.log("SAlaryrecord",data.salaryRecord)
+    return data.salaryRecord;
 }
 

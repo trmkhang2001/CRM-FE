@@ -17,6 +17,7 @@ import { toast } from "sonner"
 import { CreateSalaryDto, Salary, UpdateSalaryDto } from "@/models/salary"
 import { createSalary, updateSalary } from "@/services/salaryService"
 import { addNewSalaryIntoStore, updateSalaryStore, useSalaryStore } from "../store/salary-store"
+import { getEmployeeById } from "@/services/employee-api"
 type SalaryFormProps = {
     onSave: () => void;
     initialData?: Salary;
@@ -93,11 +94,14 @@ export function SalaryForm({ onSave, initialData }: SalaryFormProps) {
                     allowance: parseInt(values.allowance, 10)
                 };
                 const data = await updateSalary(salaryDataEdit)
-                updateSalaryStore(data);
+                const getEmployeeName =  await getEmployeeById(data.employeeId)
+                const value: Salary = {
+                    ...data,
+                    employeeName: getEmployeeName.fullName
+                }
+                updateSalaryStore(value);
                 toast.success('Cập nhập nhân viên thành công');
                 onSave();
-                console.log("salaryList", salaryList)
-                console.log("data", data)
             }
             else {
                 const salaryDataCreate: CreateSalaryDto = {
@@ -110,16 +114,16 @@ export function SalaryForm({ onSave, initialData }: SalaryFormProps) {
                     month: values.month,
                     year: values.year
                 };
-
                 const data = await createSalary(salaryDataCreate);
-
-                addNewSalaryIntoStore(data);
+                const getEmployeeName =  await getEmployeeById(data.employeeId)
+                const value: Salary = {
+                    ...data,
+                    employeeName: getEmployeeName.fullName
+                }
+                addNewSalaryIntoStore(value);
                 toast.success('Thêm nhân viên mới thành công')
-                onSave();
-                console.log("salaryList", salaryList)
-                console.log("data", data)
-
             }
+            onSave();
         }
         catch (error) {
             console.log(error)

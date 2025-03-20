@@ -1,7 +1,6 @@
 'use client'
 
-import { Button } from "@/components/ui/button";
-import { NavUser } from "@/components/user/nav-user";
+import { NavUser } from "@/components/userProfile/nav-user";
 import { useAuth } from "@/contexts/AuthContext";
 import React from "react";
 
