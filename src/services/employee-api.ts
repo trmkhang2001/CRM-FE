@@ -25,12 +25,10 @@ export type createEmployeeDto = {
 }
 
 export async function getEmployeeById(id: number): Promise<Staff> {
-    console.log(ENDPOINTS.EMPLOYEES);
     const data = await fetchData<Staff>(`${ENDPOINTS.EMPLOYEES}/${id}`, "GET");
     return data;
+    
 }
-
-
 export async function getAllEmployee(): Promise<Staff[]> {
     const cookieStore = await cookies();
     const token = cookieStore.get('token')?.value;

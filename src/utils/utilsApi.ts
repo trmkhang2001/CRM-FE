@@ -30,6 +30,6 @@ export async function fetchData<T>(
         throw new Error(errorData.message || "Failed to fetch data");
     }
     const responseData = await response.json()
-    console.log("responseData", responseData)
+    console.log("responseData",responseData)
     return responseData;
 }

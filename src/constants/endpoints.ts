@@ -2,4 +2,5 @@ export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://loca
 export const ENDPOINTS = {
   EMPLOYEES: `${API_BASE_URL}/api/employees`,
   SALARIES: `${API_BASE_URL}/api/salaries`,
+  USERS: `${API_BASE_URL}/api/users`,
 };

@@ -1,9 +1,9 @@
-
+import UserDetailPage from "@/components/users/UserList";
 
 export default async function UserPage() {
-  return (
-    <div>
-        User
-    </div>
-  )
+    return (
+        <div>
+            <UserDetailPage />
+        </div>
+    )
 }
