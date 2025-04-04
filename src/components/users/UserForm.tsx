@@ -79,9 +79,7 @@ export function UserForm({ onSave, initialData, isEdit }: UserFormProps) {
             }
         }
         catch (error) {
-            toast.error(isEdit ? 'Cập nhật thất bại' : 'Thêm mới thất bại', {
-                description: 'Vui lòng thử lại sau.',
-            });
+            form.setError("email", { message: "Email đã tồn tại" });
         }
     }
     return (

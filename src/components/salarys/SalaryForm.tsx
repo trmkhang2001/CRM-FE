@@ -100,7 +100,7 @@ export function SalaryForm({ onSave, initialData }: SalaryFormProps) {
                     employeeName: getEmployeeName.fullName
                 }
                 updateSalaryStore(value);
-                toast.success('Cập nhập nhân viên thành công');
+                toast.success('Cập nhập lương thành công');
                 onSave();
             }
             else {
@@ -121,12 +121,12 @@ export function SalaryForm({ onSave, initialData }: SalaryFormProps) {
                     employeeName: getEmployeeName.fullName
                 }
                 addNewSalaryIntoStore(value);
-                toast.success('Thêm nhân viên mới thành công')
+                toast.success('Thêm nhân lương nhân viên thành công')
             }
             onSave();
         }
         catch (error) {
-            console.log(error)
+            form.setError("employeeId", { message: "Mã số nhân viên không tồn tại" });
         }
     }
     return (

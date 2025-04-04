@@ -51,7 +51,7 @@ const formSchema = z.object({
 
 export function CreateNewEmployeesForm({ onSave, initialData }: CreateNewEmployeesFormProps) {
     const [department, setDepartment] = useState<DepartmentModel[]>([])
-    const {employeeList } = useEmployeesStore();
+    const { employeeList } = useEmployeesStore();
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -85,28 +85,32 @@ export function CreateNewEmployeesForm({ onSave, initialData }: CreateNewEmploye
                     departmentId: parseInt(values.departmentId, 10)
                 };
                 const data = await updateEmployee(employeeData)
-                updateEmployeeStore(data)
+                const dataUpdate = department.find(dp => dp.id === data.departmentId)
+                const mergedData = {
+                    ...data,
+                    Department: dataUpdate
+                } as StaffModel
+                updateEmployeeStore(mergedData)
                 toast.success('Cập nhập nhân viên thành công');
                 onSave();
-                console.log("data", data)
-                console.log("employeeList", employeeList)
             }
             else {
                 const data = await createEmployee(values);
-                addNewEmployeeIntoStore(data);
-                console.log("data", data)
+                const dataAdd = department.find(dp => dp.id === Number(data.departmentId))
+                const mergedData = {
+                    ...data,
+                    Department: dataAdd
+                } as StaffModel
+                addNewEmployeeIntoStore(mergedData);
                 if (data) {
                     toast.success('Thêm nhân viên mới thành công', {
                     })
                     onSave();
-                } else {
-                    toast.error('Thêm mới thất bại', {
-                    });
                 }
             }
         }
         catch (error) {
-            console.log(error)
+            form.setError("email", { message: "Email đã tồn tại" });
         }
     }
     return (

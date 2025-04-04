@@ -46,6 +46,7 @@ export async function createEmployee(props: createEmployeeDto): Promise<StaffMod
 }
 
 export async function deleteEmployee(id: number): Promise<string> {
+    console.log("id",id)
     const data = await fetchData<string>(`${ENDPOINTS.EMPLOYEES}/${id}`, Method.DELETE);
     return data;
 }

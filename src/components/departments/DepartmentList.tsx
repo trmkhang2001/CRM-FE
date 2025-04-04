@@ -8,7 +8,7 @@ import { Button } from "../ui/button";
 import { Plus } from "lucide-react";
 import CreateDialog from "../dialogs/CreateDialog";
 import { getAllDepartment } from "../../services/departmentService";
-import { DepartmentForm } from "./DepartmentForm";
+import { CreateNewDepartmentForm } from "./DepartmentForm";
 
 
 export default function DepartmentDetailPage() {
@@ -29,7 +29,7 @@ export default function DepartmentDetailPage() {
             <DataTables columns={departmentColumn} data={[...(departmentList || [])]} columnKey="name" placeholder="Vui lòng nhập tên phòng ban...">
                 <Button onClick={() => setOpen(true)}><Plus /> Thêm mới phòng ban </Button>
                 <CreateDialog open={open} setOpen={setOpen} title="Thêm mới phòng ban">
-                    <DepartmentForm onSave={()=>setOpen(false)}></DepartmentForm>
+                    <CreateNewDepartmentForm onSave={()=>setOpen(false)}></CreateNewDepartmentForm>
                 </CreateDialog> 
             </DataTables>
         </div>

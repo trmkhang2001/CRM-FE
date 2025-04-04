@@ -5,22 +5,16 @@ import DataTables from "../datatables/DataTable";
 import { Button } from "../ui/button";
 import { Plus } from "lucide-react";
 import { toast } from "sonner";
-import { createUser, deleteUser, getAllUser, updateUser } from "@/services/userService";
-import { CreateUserDto, UserModel } from "@/models/userModel";
-import { ColumnDef } from "@tanstack/react-table";
-import { SalaryForm } from "../salarys/SalaryForm";
-import { EditButton } from "../common/EditButton";
-import { DeleteButton } from "../common/DeleteButton";
+import { getAllUser,  } from "@/services/userService";
 import { UserForm } from "./UserForm";
-import { deleteUserStore, setAllUserIntoStore, useUserStore } from "../stores/user-store";
-import { EditUserForm } from "./EditUserForm";
+import { setAllUserIntoStore, useUserStore } from "../stores/user-store";
 import { getCurrentUser } from "@/services/api";
 import NotFoundPage from "@/app/(pages)/not-found";
+import { userColumns } from "../datatables/columns/user-column";
 
 
 export default function UserDetailPage() {
     const [open, setOpen] = useState(false);
-    const [editOpen, setEditOpen] = useState(false);
     const { userList } = useUserStore();
     const [isStaff, setIsStaff] = useState(false)
     const [loading, setLoading] = useState(true);
@@ -47,42 +41,6 @@ export default function UserDetailPage() {
         };
         fetchSalaryRecords();
     }, []);
-
-    const handleDelete = async (id: number) => {
-        const data = await deleteUser(id)
-        deleteUserStore(id);
-    };
-
-    const userColumns: ColumnDef<UserModel>[] = [
-        {
-            accessorKey: "name",
-            header: "Họ và tên",
-        },
-        {
-            accessorKey: "email",
-            header: "Email",
-        },
-        {
-            accessorKey: "role",
-            header: "Vai trò",
-        },
-        {
-            id: "actions",
-            enableHiding: false,
-            cell: ({ row }) => {
-                const userValue = row.original;
-                return (
-                    <div className="flex gap-1">
-                        <EditButton title="Chỉnh sửa thông tin người dùng" open={editOpen} setOpen={setEditOpen}>
-                            <EditUserForm isEdit={true} initialData={userValue} onSave={() => setEditOpen(false)} />
-                        </EditButton>
-                        <DeleteButton itemName={userValue.name} onDelete={() => handleDelete(userValue.id)} id={userValue.id} />
-                    </div>
-                );
-            },
-        },
-    ];
-
 
     if (loading) {
         return <div>Đang tải...</div>;

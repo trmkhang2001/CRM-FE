@@ -3,19 +3,24 @@
 import { ColumnDef } from "@tanstack/react-table"
 import { StaffModel } from "@/models/employeeModel";
 import { Badge } from "@/components/ui/badge";
-import { DeleteButton } from "@/components/common/DeleteButton";
 import { deleteEmployee } from "@/services/employeeService";
 import { deleteEmployeeStore } from "@/components/stores/employees-store";
-import { EditButton } from "@/components/common/EditButton";
 import { CreateNewEmployeesForm } from "@/components/employees/create-new-employees-form";
-import { useState } from "react";
+import { ActionCell } from "@/components/common/GenericActionCell";
+import { toast } from "sonner";
 
 
-const handleDelete = (id: number) => {
-    deleteEmployee(id);
-    deleteEmployeeStore(id);
+
+const handleDelete = async (id: number) => {
+    try {
+        const data = await deleteEmployee(id)
+        deleteEmployeeStore(id);
+    }
+    catch (error) {
+        toast.error('Xóa nhân viên không thành công, hãy xóa lương của nhân viên trước', {
+        })
 }
-
+};
 
 export const employeeColumns: ColumnDef<StaffModel>[] = [
     {
@@ -65,18 +70,21 @@ export const employeeColumns: ColumnDef<StaffModel>[] = [
         id: "actions",
         enableHiding: false,
         cell: ({ row }) => {
-            const [open, setOpen] = useState(false)
             const employeeData = row.original
             return (
-                <div className="flex gap-1">
-                    <EditButton title="Chỉnh sửa nhân viên" open={open} setOpen={setOpen} >
+                <ActionCell
+                    employeeData={employeeData}
+                    title="Chỉnh sửa nhân viên"
+                    name={employeeData.fullName}
+                    id={employeeData.id}
+                    onDelete={handleDelete}
+                    editForm={(onSave) => (
                         <CreateNewEmployeesForm
-                            initialData={employeeData}
-                            onSave={() => setOpen(false)}
+                            initialData={row.original}
+                            onSave={onSave}
                         />
-                    </EditButton>
-                    <DeleteButton itemName={employeeData.fullName} onDelete={handleDelete} id={employeeData.id} />
-                </div>
+                    )}
+                />
             )
         }
     },
