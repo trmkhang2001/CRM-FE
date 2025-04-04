@@ -7,7 +7,12 @@ import { SalaryForm } from "@/components/salarys/SalaryForm";
 import { deleteSalary } from "@/services/salaryService";
 import { deleteSalaryStore } from "@/components/stores/salary-store";
 import { EditButton } from "@/components/common/EditButton";
+import { ActionCell } from "@/components/common/GenericActionCell";
 
+const handleDelete = async (id: number) => {
+    const data = await deleteSalary(id)
+    deleteSalaryStore(id);
+};
 
 export const salaryColumn: ColumnDef<SalaryModel>[] = [
   {
@@ -42,23 +47,21 @@ export const salaryColumn: ColumnDef<SalaryModel>[] = [
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
       const salaryValue = row.original
-      console.log("salaryValue:", salaryValue)
-      const handleDelete = (id: number) => {
-        deleteSalary(id);
-        deleteSalaryStore(id);
-      }
       return (
-        <div className="flex gap-1">
-          <EditButton title="Chỉnh sửa nhân viên" open={isEditDialogOpen} setOpen={setIsEditDialogOpen} >
+        <ActionCell
+          employeeData={salaryValue}
+          title="Chỉnh sửa nhân viên"
+          name={salaryValue.employeeName}
+          id={salaryValue.id}
+          onDelete={handleDelete}
+          editForm={(onSave) => (
             <SalaryForm
-              initialData={salaryValue}
-              onSave={() => setIsEditDialogOpen(false)}
+              initialData={row.original}
+              onSave={onSave}
             />
-          </EditButton>
-          <DeleteButton itemName={salaryValue.employeeName} onDelete={handleDelete} id={salaryValue.id} />
-        </div>
+          )}
+        />
       )
     }
   },

@@ -27,14 +27,6 @@ export const departmentColumn: ColumnDef<DepartmentModel>[] = [
       const departmentValues = row.original
       return (
         <div className="flex gap-1 justify-center">
-          {/* <Button variant='edit' onClick={() => setIsEditDialogOpen(true)}>
-            Edit</Button>
-          <CreateDialog open={isEditDialogOpen} setOpen={setIsEditDialogOpen} title="Chỉnh sửa phòng ban">
-            <CreateNewDepartmentForm
-              initialData={departmentValues}
-              onSave={() => setIsEditDialogOpen(false)}
-            />
-          </CreateDialog> */}
           <DeleteButton itemName={departmentValues.name} onDelete={handleDelete} id={departmentValues.id} />
         </div>
       )
